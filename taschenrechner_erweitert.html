@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Zahlen raten</title>
+<meta charset="ISO-8859-1">
+<meta name="author" content="Sarah Fuchs">
+<meta name="description" content="Zahlen raten">
+<style>
+body { background-color:#000000; color:black; font-family:Arial;
+    background-image: url('bild.avif');
+ font-size:18px; font-weight:normal; text-align:left; margin:7.5%; padding-left:3.1%; }
+#erg { background-color:antiquewhite; color:blue; border:2px solid #666666;
+ font-family: Arial; font-size: 19px; font-weight:bold; }
+#box { background-color:#EEEEEE; width: 32%; }
+.tex { background-color:antiquewhite; border:2px solid #666666; font-size: 16px; font-weight:bold; }
+.btn { background-color:antiquewhite; border:2px solid #666666; border-radius:20%;
+ font-size: 14px; font-weight:bold; }
+</style>
+<script>
+ var run = false;
+ var max = 100;
+ var min = 0;
+ var text = '';
+ var count = 0;
+ var zahl;
+ var eingabe;
+ var ausgabe;
+ function fnew() {
+ var diff = max - min;
+ zahl = Math.floor(diff * Math.random()) + min;
+ count = 0;
+ text = '';
+ document.getElementById("erg").value = text;
+ document.getElementById("aus").value = 0;
+ document.getElementById("ein").value = '';
+ document.getElementById("ein").focus();
+ run = true;
+}
+ function fplay() {
+ if (!run) {
+ alert('Zuerst <Neues Spiel> anklicken !');
+ return;
+ }
+ var info1 = ' ist zu hoch !';
+ var info2 = ' ist zu tief !';
+ var info3 = ' ist richtig !';
+ var element = document.getElementById("ein");
+ eingabe = element.value.trim();
+ count++;
+ document.getElementById("aus").value = count;
+
+ if (eingabe == '' || isNaN(eingabe)) {
+ alert('Das ist keine Zahl !');
+ element.value = '';
+ element.focus();
+ return;
+ }
+ if (zahl < eingabe) { text = ' ' + eingabe + info1; }
+ if (zahl > eingabe) { text = ' ' + eingabe + info2; }
+ if (zahl == eingabe) { text = ' ' + eingabe + info3; run = false; }
+ document.getElementById("erg").value = text;
+ element.value = '';
+ element.focus();
+ }
+</script>
+</head>
+<body>
+<form name="MyForm">
+<br>
+<h2>Einfaches Zahlenraten</h2>
+<p>
+Der Zufall bestimmt eine Zahl zwischen 0 und 100<br>
+Auf auf, rate mal . . .<br>
+</p>
+<input type="button" name="btn1" value="Neues Spiel" class="btn" onclick="fnew()"> &nbsp;
+Zahl eingeben: <input type="text" name="ein" value="0" size="5" id="ein" class="tex"> &nbsp;
+<input type="button" name="btn2" value="Zahl testen" class="btn" onclick="fplay()">
+<br><br>
+<fieldset id="box">
+<br>
+Ergebnis:&nbsp; <input type="text" name="ergebnis" value="0" size="18" id="erg" class="tex" readonly>
+<br><br>
+Eingaben: <input type="text" name="aus" value="0" size="5" id="aus" class="tex" readonly>
+<br><br>
+</fieldset>
+</form>
+</body>
+</html>
